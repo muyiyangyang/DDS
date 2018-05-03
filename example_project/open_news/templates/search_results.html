@@ -1,0 +1,86 @@
+{% extends "resources/base.html" %}
+{% block head %}
+{% load staticfiles %}
+<title>搜索结果</title>
+<link href={% static "css/style.css" %} rel="stylesheet" type="text/css" />
+   
+{% endblock %}
+
+{% block body %}
+{% load open_news_extras %}
+<dl class="bar top">
+	<dt><img src="static/images/logo01.jpg" width="290" height="46" /></dt>
+    <dd>
+    	<span>当前用户</span><font>{{user}}</font><span><a href="/logout">退出</a></span>
+	<td align="middle" width="200" bgcolor="#e6e0e4"> <script language="JavaScript" type="text/javascript">
+	todayDate = new Date();
+	date = todayDate.getDate();
+	month= todayDate.getMonth() +1;
+	year= todayDate.getYear();
+	if(navigator.appName == "Netscape")
+	{
+	document.write(1900+year);
+	document.write("年");
+	document.write(month);
+	document.write("月");
+	document.write(date);
+	document.write("日");
+	document.write(" ")
+	}
+	if(navigator.appVersion.indexOf("MSIE") != -1)
+	{
+	document.write(year);
+	document.write("年");
+	document.write(month);
+	document.write("月");
+	document.write(date);
+	document.write("日");
+	document.write(" ")
+	}
+	if (todayDate.getDay() == 5) document.write("星期五")
+	if (todayDate.getDay() == 6) document.write("星期六")
+	if (todayDate.getDay() == 0) document.write("星期日")
+	if (todayDate.getDay() == 1) document.write("星期一")
+	if (todayDate.getDay() == 2) document.write("星期二")
+	if (todayDate.getDay() == 3) document.write("星期三")
+	if (todayDate.getDay() == 4) document.write("星期四")
+	</script> </td>
+    </dd>
+</dl>
+    
+<div class="clear"></div>
+<div class="bar">
+<div class="mian width">
+	<dl class="nav">
+    	<dd><a href="mainpage">首 页</a></dd>
+    	<dd><a href="luntan">校园论坛</a></dd>
+    	<dd><a href="yj">预警系统</a></dd>
+        <dt><a href="hutai">后台设置</a></dt>
+    </dl>
+<div class="menu_main">
+<ul class="hotli1"> 
+
+
+{% if open_news_article %}
+    <p>Found {{ open_news_article|length }} item{{ open_news_article|pluralize }}.</p>
+    <ul>
+        {% for item in open_news_article %}
+        <li><a h="ID=SERP,5114.1" target="_blank" href="{{item.url}}" style="color:black">&bull;{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}
+
+ </ul> 
+</div>
+<div class="footer width">版权所有：重庆邮电大学與情小组版权所有</div>
+</div>
+</div>
+<div class="clear"></div>
+
+      
+
+{%endblock%}
+
+

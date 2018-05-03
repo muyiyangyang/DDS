@@ -1,0 +1,227 @@
+{% extends "resources/base.html" %}
+{% block head %}
+{% load staticfiles %}
+<title>主页</title>
+<link href={% static "css/style.css" %} rel="stylesheet" type="text/css" />
+   <script src="/static/MochiKit/MochiKit.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/excanvas.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/Base.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/Layout.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/Canvas.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/SweetCanvas.js" type="text/javascript"></script>   
+{% endblock %}
+
+{% block body %}
+{% load open_news_extras %}
+    <dl class="bar top">
+	<dt><img src="static/images/logo01.jpg" width="290" height="46" /></dt>
+    <dd>	
+    	<span>当前用户</span><font>{{user}}</font><span><a href="/logout">退出</a></span>	
+	<td align="middle" width="200" bgcolor="#e6e0e4"> <script language="JavaScript" type="text/javascript">
+	todayDate = new Date();
+	date = todayDate.getDate();
+	month= todayDate.getMonth() +1;
+	year= todayDate.getYear();
+	if(navigator.appName == "Netscape")
+	{
+	document.write(1900+year);
+	document.write("年");
+	document.write(month);
+	document.write("月");
+	document.write(date);
+	document.write("日");
+	document.write(" ")
+	}
+	if(navigator.appVersion.indexOf("MSIE") != -1)
+	{
+	document.write(year);
+	document.write("年");
+	document.write(month);
+	document.write("月");
+	document.write(date);
+	document.write("日");
+	document.write(" ")
+	}
+	if (todayDate.getDay() == 5) document.write("星期五")
+	if (todayDate.getDay() == 6) document.write("星期六")
+	if (todayDate.getDay() == 0) document.write("星期日")
+	if (todayDate.getDay() == 1) document.write("星期一")
+	if (todayDate.getDay() == 2) document.write("星期二")
+	if (todayDate.getDay() == 3) document.write("星期三")
+	if (todayDate.getDay() == 4) document.write("星期四")
+	</script> </td>
+    </dd>
+</dl>
+
+<div class="clear"></div>
+<div class="bar">
+<div class="mian width">
+	<dl class="nav">
+    	<dd><a href="mainpage">首 页</a></dd>
+    	<dd><a href="luntan">校园论坛</a></dd>
+    	<dd><a href="yj">预警系统</a></dd>
+        <dt><a href="hutai">后台设置</a></dt>
+    </dl>
+    
+    <div class="menu_main">
+    	<div class="left">
+        	<div class="hotp">
+            	<dl class="width bttitle"><dt></dt><dd class="bttext"><img src="static/images/yuq18.jpg" width="22" height="12" /> <font>热点</font>排行</dd><dd class="btright"></dd></dl>
+                <div class="hotmain">
+                	<div class="xxk01">
+			<a href="month">本月</a>
+			<a href="week">本周</a>
+			<a href="today">本日</a></div>
+                    <ul class="hotli"> 
+		    
+                        {%for item in open_news_article|slice:":10"%}
+			 
+                    	 <li><a href="{{item.url}}" style="color:black">{{item.title|slice:"0:10"}}...</a>点击量：<span>{{item.pointnum}}</span></li>          
+               
+                {%endfor%}
+	
+                    	
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="hotp margin_top">
+            	<dl class="width bttitle"><dt></dt><dd class="bttext"><img src="static/images/yuq18.jpg" width="22" height="12" /> <a href="zuozhe"<font>作者</font>排行</a></dd><dd class="btright"></dd></dl>
+                <div class="hotmain">
+                 <ul class="hotli"> 
+               	    
+                {%for item in open_news_article|slice:":9"%}
+                              
+                   <li><a href="{{item.url}}" style="color:black">{{item.author}}</a>发帖数：<span>{{item.zhutinum}}</span></li>          
+               
+                {%endfor%}
+                   </ul>
+                
+              </div>
+            </div>
+        </div>
+        
+        <div class="center">
+        	<div class="menu width">
+           	  <dl class="width bttitle bttitle01"><dt></dt><dd class="bttext bttext01"><font>预警</font>系统</dd><dd class="btright btright01"></dd></dl>
+                  <ul class="liys01">
+               	    	
+                        {%for item in open_news_article|slice:"15:19"%}
+			 
+                    	 <li>&bull;<a href="{{item.url}}" style="color:black">{{item.title|slice:"0:16"}}</a></li>          
+               
+                {%endfor%}
+                  </ul>
+            </div>
+            
+        	<div class="menu width margin_top">
+           	  <dl class="width bttitle bttitle01"><dt></dt><dd class="bttext bttext01"><font>舆情</font>统计</dd><dd class="btright btright01"></dd></dl>
+                  <ul class="liys01">
+               	    	<li>
+                        	<h3>1.最近一周校园舆情总数量统计</h3>
+                             <p><div><canvas id="graph" height="300" width="350"></canvas>
+				<script type="text/javascript">	
+				 var options = {
+   				"FFCanvasHTC": "/plotkit/ffcanvas.htc",
+   				"colorScheme": PlotKit.Base.palette(PlotKit.Base.baseColors()[2]),
+				
+   				"padding": {left: 0, right: 0, top: 10, bottom: 50},
+   				"xTicks": [
+          			{v:0, label:"五天前"}, 
+          			{v:1, label:"四天前"},
+          			{v:2, label:"三天前"},
+          			{v:3, label:"两天前"},
+				{v:4, label:"一天前"},
+				{v:5, label:"今日"}],
+   				 "barWidthFillFraction": 0.50,
+				 "yAxis": [0, 1500],
+						};	
+				{%for item in open_news_article%}
+
+				function drawGraph() {
+    				var layout = new PlotKit.Layout("bar", options);
+    				layout.addDataset("sqrt", [ [0,365], [1,431], [2,636], [3,753], [4,543], [5,645]]);
+    				layout.evaluate();
+    				var canvas = MochiKit.DOM.getElement("graph");
+    				var plotter = new PlotKit.SweetCanvasRenderer(canvas, layout, options);
+   				plotter.render();
+							}
+				{%endfor%}
+				MochiKit.DOM.addLoadEvent(drawGraph);
+				</script>				
+				</div>
+								
+				
+
+                                  
+                             </p>
+			
+                        </li>
+               	    	<li>
+                        	<h3>2.最近一个月校园热点舆情趋势图</h3>
+                            <p><img src="static/images/yuq13.jpg" width="345" height="160" /></p>
+                        </li>
+                  </ul>
+            </div>
+        </div>
+        
+      <div class="right">
+	
+   	    <div class="search">
+		 {% if error %}
+        	<p style="color: red;">Please submit a search term.</p>
+    		{% endif %}
+    	
+        <form action="search" method="get">
+            	<input name="q" type="text" class="input01" />
+        <select name=""></select>
+              <a href=search_results><input name="" type="submit" class="input02" value=" " /></a>
+		</form>
+            </div>
+        <div class="hotp paih margin_top">
+              <dl class="width bttitle">
+                <dt></dt>
+                <dd class="bttext"><img src="static/images/yuq18.jpg" width="22" height="12" /> <font>舆情</font>百科热词</dd>
+                <dd class="btright"></dd>
+              </dl>
+              <div class="hotmain paihmian">
+                <ul class="hotli">
+                  <li style="font-size:25px" >
+			四六级  空调
+			食堂   洗澡</li>
+                </ul>
+              </div>
+        </div>
+        <div class="hotp paih margin_top">
+              <dl class="width bttitle">
+                <dt></dt>
+                <dd class="bttext"><img src="static/images/yuq18.jpg" width="22" height="12" /> <font>舆情</font>持续度排行</dd>
+                <dd class="btright"></dd>
+              </dl>
+                <div class="hotmain paihmian01">
+                  <ul class="hotli">
+               	    	  {%for item in open_news_article|slice:"11:18"%}
+			 
+                    	 <li><a href="{{item.url}}" style="color:black">{{item.title|slice:"0:10"}}</a><span>{{item.ftime}}---{{item.ztime}} </span></li>          
+               
+                {%endfor%}
+                  </ul>
+              </div>
+        </div>
+        
+        <dl class="gt margin_top">
+        	<dt>最近一个月热点话题数量占舆情话题总数的比例</dt>
+            <dd><img src="static/images/yuq17.jpg" width="310" height="165" /></dd>
+        </dl>
+        
+        </div>
+    </div>
+    <div class="footer width">版权所有：重庆邮电大学與情小组版权所有</div>
+</div>
+</div>
+<div class="clear"></div>
+      
+ 
+   
+{%endblock%}
+

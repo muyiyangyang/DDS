@@ -1,0 +1,13 @@
+/*--------登录--------*/
+.login{width:635px; height:auto; margin:0 auto;}
+.login_main{width:635px; height:auto; background:url(images/yuq49.jpg) repeat-x top; margin-top:100px;}
+.login dt{background:url(images/yuq50.jpg) repeat-y right; height:220px; width:315px; padding-right:17px; float:left; padding-top:120px;}
+.login_right{width:265px; height:auto; float:left; padding-left:35px;}
+.login_right h3{background:url(images/yuq43.jpg) no-repeat; width:177px; height:48px; float:left; margin:30px 0px 10px 20px;}
+.login_right p{width:100%; float:left; margin-top:10px;}
+.input06{background:url(images/yuq44.jpg) no-repeat; width:178px; height:40px; float:left; border:0; padding:0 5px 0px 40px; line-height:40px; color:#ffffff;}
+.input07{background:url(images/yuq45.jpg) no-repeat;}
+.input08{background:url(images/yuq46.jpg) no-repeat; width:80px; height:40px; padding:0 5px; margin-right:10px;}
+.input09{background:url(images/yuq48.jpg) no-repeat; width:110px; height:42px;}
+.login_line{width:100%; height:2px; float:left; background:url(static/images/yuq49.jpg) repeat-x;}
+.login_footer{line-height:80px; color:#45607e; text-align:center;}

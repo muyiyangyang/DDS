@@ -1,0 +1,65 @@
+{% extends "resources/base.html" %}
+{% block head %}
+{% load staticfiles %}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登录</title>
+<link href= {% static "css/style.css"%} rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+{% load open_news_extras %} 
+<div class="clear"></div>
+  {% if error %}
+  <div id="login-error" class="span9 message"> 
+    <div class="message-text">{{ error }}</div>
+  </div>		
+  {% endif %}	
+  <div id="left-column" class="span5 column">
+    <div id="open_news-welcome">
+      <h1></h1>
+      
+    </div>
+  </div>
+ <div class="login"> 
+    <dl class="login_main width">
+	<dt><img src="static/images/logo05.jpg" width="308" height="86" /></dt>
+    <dd class="login_right">
+      <div id="login-forms" class="span4 column"> 
+    <form class="form-signin" method="post">
+      <input type="hidden" name="post_action" value="sign_in"></input>
+      {% csrf_token %}
+      <h1 class="form-signin-heading">请登录</h1>
+      {% error_div sign_in_form.non_field_errors %}
+      {% error_div sign_in_form.errors.username %}
+      <input type="text" name="username" class="input-block-level" placeholder="帐号">
+      {% error_div sing_in_form.errors.password %}
+      <input type="password" name="password" class="input-block-level" placeholder="密码">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-large btn-primary" type="submit" name="post_action" value="sign_in">登录</button>
+    </form>	
+    <form class="form-signin" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="post_action" value="sign_up"></input>
+      <h1 class="form-signin-heading">注册</h1>
+      {% error_div sign_up_form.non_field_errors %}
+      {% error_div sign_up_form.errors.username %}
+      <input type="text" name="username" class="input-block-level" placeholder="帐号">
+      {% error_div sign_up_form.errors.email %}
+      <input type="text" name="email" class="input-block-level" placeholder="邮箱">
+      {% error_div sign_up_form.errors.email %}
+      <input type="password" name="password1" class="input-block-level" placeholder="密码">
+      {% error_div sign_up_form.errors.password2 %}
+      <input type="password" name="password2" class="input-block-level" placeholder="重复密码">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-large btn-primary" type="submit" name="post_action" value="sign_up">完成</button>
+    </form>	
+     </div>   
+    </dd>	
+    <dd class="login_line"></dd>
+   </dl>
+ </div>
+<div class="clear"></div>
+<div class="login_footer width">版权所有：重庆邮电大学與情小组版权所有</div>
+{% endblock %}

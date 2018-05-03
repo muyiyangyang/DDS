@@ -1,0 +1,281 @@
+{% extends "resources/base.html" %}
+{% block head %}
+{% load staticfiles %}
+<link href={% static "css/style.css" %} rel="stylesheet" type="text/css" />
+   <script src="/static/MochiKit/MochiKit.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/excanvas.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/Base.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/Layout.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/Canvas.js" type="text/javascript"></script>
+   <script src="/static/PlotKit/SweetCanvas.js" type="text/javascript"></script>   
+{% endblock %}
+
+{% block body %}
+{% load open_news_extras %}
+    <dl class="bar top">
+	<dt><img src="static/images/logo01.jpg" width="290" height="46" /></dt>
+    <dd>
+    	<span>当前用户</span><font>{{user}}</font><span><a href="/logout">退出</a></span>
+	<td align="middle" width="200" bgcolor="#e6e0e4"> <script language="JavaScript" type="text/javascript">
+	todayDate = new Date();
+	date = todayDate.getDate();
+	month= todayDate.getMonth() +1;
+	year= todayDate.getYear();
+	if(navigator.appName == "Netscape")
+	{
+	document.write(1900+year);
+	document.write("年");
+	document.write(month);
+	document.write("月");
+	document.write(date);
+	document.write("日");
+	document.write(" ")
+	}
+	if(navigator.appVersion.indexOf("MSIE") != -1)
+	{
+	document.write(year);
+	document.write("年");
+	document.write(month);
+	document.write("月");
+	document.write(date);
+	document.write("日");
+	document.write(" ")
+	}
+	if (todayDate.getDay() == 5) document.write("星期五")
+	if (todayDate.getDay() == 6) document.write("星期六")
+	if (todayDate.getDay() == 0) document.write("星期日")
+	if (todayDate.getDay() == 1) document.write("星期一")
+	if (todayDate.getDay() == 2) document.write("星期二")
+	if (todayDate.getDay() == 3) document.write("星期三")
+	if (todayDate.getDay() == 4) document.write("星期四")
+	</script> </td>
+    </dd>
+</dl>
+
+<div class="clear"></div>
+<div class="bar">
+<div class="mian width">
+	<dl class="nav">
+    	<dd><a href="mainpage">首 页</a></dd>
+    	<dd><a href="luntan">校园论坛</a></dd>
+    	<dd><a href="yj">预警系统</a></dd>
+        <dt class="lunt"><img src="static/images/logo02.jpg" width="142" height="48" /></dt>
+    </dl>
+    
+    <div class="menu_main">
+    	<div class="left01">
+        	<div class="width">
+            	<div class="huat">
+                	<ul class="width tie">
+		 {%for item in open_news_article|slice:":1"%}
+                              
+                   <li>总帖数：<a href="{{item.url}}" style="color:black">10101</a></li>          
+                   <li>今日帖数：<a href="{{item.url}}" style="color:black">20</a></li>
+                {%endfor%}
+               	    	
+               	    	
+                    </ul>
+              		<dl class="width bttitle">
+                		<dd class="bttext"><font>热点</font>话题统计</dd>
+              		</dl>
+                    
+                  <ul class="hotli">
+               	    	<li><a href="#">今日热点话题:食堂</a></li>
+               	    	<li><a href="#">本周热点话题:运动会</a></li>
+               	    	<li><a href="#">本月热点话题:空调</a></li>
+                  </ul>
+                </div>
+                
+                <div class="ping width">
+           	  		<dl class="width bttitle bttitle01"><dt></dt><dd class="bttext bttext01"><font>热门</font>评论舆情</dd><dd class="btright btright01"></dd></dl>
+                  <ul class="liys01 liys02">
+               	    	 {%for item in open_news_article|slice:":5"%}
+			 
+                    	 <li>&bull;<a href="{{item.url}}" style="color:black">{{item.title|slice:"0:16"}}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回帖数：<span>{{item.answernum}}</span></li>          
+               
+                          {%endfor%}
+                  </ul>
+            </div>
+            </div>
+            <div class="width margin_top">
+            	<div class="hotp fenx">
+            	<dl class="width bttitle"><dt></dt><dd class="bttext"><img src="static/images/yuq26.jpg" width="14" height="15" /> <font>舆情</font>倾向性分析</dd><dd class="btright"></dd></dl>
+                <div class="hotmain hotmain01">
+                	<div class="xxk01 xxk02"><a href="#">正面舆情</a><a href="#">中性舆情</a><a href="#">负面舆情</a></div>
+                    <ul class="hotli">
+                    	 {%for item in open_news_article|slice:"11:20"%}
+			 
+                    	 <li><a href="{{item.url}}" style="color:black">{{item.title|slice:"0:16"}}</a></li>          
+               
+                {%endfor%}
+                    </ul>
+                </div>
+            </div>
+            <div class="hotp fenx folat_r">
+            	<dl class="width bttitle"><dt></dt><dd class="bttext"><img src="static/images/yuq29.jpg" width="19" height="20" /> <font>正面</font>舆情各话题所占比例</dd><dd class="btright"></dd></dl>
+                  <div class="hotmain hotmain01">
+                	<div><canvas id="bbb" height="300" width="320"></canvas>
+				<script type="text/javascript">	
+				 var options = {
+   				"FFCanvasHTC": "/plotkit/ffcanvas.htc",
+   				"colorScheme": PlotKit.Base.palette(PlotKit.Base.baseColors()[5]),
+				
+   				"padding": {left: 0, right: 0, top: 10, bottom: 50},
+   				"xTicks": [{v:0, label:"其他"}, 
+          			{v:1, label:"食堂"}, 
+          			{v:2, label:"宿舍"},
+          			{v:3, label:"收费"},
+          			{v:4, label:"四六级"},
+				{v:5, label:"教学"}],
+   				 
+						};	
+			
+
+				function drawGraph() {
+    				var layout = new PlotKit.Layout("pie", options);
+    				layout.addDataset("sqrt", [ [0,3], [1,1], [2,1], [3,3], [4, 3], [5,2] ]);
+    				layout.evaluate();
+    				var canvas = MochiKit.DOM.getElement("bbb");
+    				var plotter = new PlotKit.SweetCanvasRenderer(canvas, layout, options);
+   				plotter.render();
+							}
+				
+				MochiKit.DOM.addLoadEvent(drawGraph);
+				</script>				
+				</div>
+                </div>
+            </div>
+            <div class="hotp fenx fenx01 folat_r">
+            	<dl class="width bttitle"><dt></dt><dd class="bttext"><img src="static/images/yuq29.jpg" width="19" height="20" /> <font>负面</font>舆情各话题所占比例</dd><dd class="btright"></dd></dl>
+                 <div class="hotmain hotmain01">
+                	<div><canvas id="aaa" height="300" width="320"></canvas>
+				<script type="text/javascript">	
+				 var optis = {
+   				"FFCanvasHTC": "/plotkit/ffcanvas.htc",
+   				"colorScheme": PlotKit.Base.palette(PlotKit.Base.baseColors()[0]),
+				
+   				"padding": {left: 0, right: 0, top: 10, bottom: 50},
+   				"xTicks": [{v:0, label:"收费"}, 
+          			{v:1, label:"空调"}, 
+          			{v:2, label:"其他"},
+          			{v:3, label:"四六级"},
+          			{v:4, label:"食堂"},
+				{v:5, label:"教学"}],
+   				 
+						};	
+			
+
+				function drawGraph() {
+    				var layout = new PlotKit.Layout("pie", optis);
+    				layout.addDataset("sqrt", [ [0,3], [1,1], [2,1], [3,3], [4, 3], [5,2] ]);
+    				layout.evaluate();
+    				var canvas = MochiKit.DOM.getElement("aaa");
+    				var plotter = new PlotKit.SweetCanvasRenderer(canvas, layout, optis);
+   				plotter.render();
+							}
+				
+				MochiKit.DOM.addLoadEvent(drawGraph);
+				</script>				
+				</div>
+						
+    
+   	 
+                </div>
+            </div>
+            </div>
+        </div>
+   	  	<div class="right">
+		  <div class="search">
+            	{% if error %}
+        	<p style="color: red;">Please submit a search term.</p>
+    		{% endif %}
+    	
+        <form action="search" method="get">
+            	<input name="q" type="text" class="input01" />
+        <select name=""></select>
+              <a href=search_results><input name="" type="submit" class="input02" value=" " /></a>
+		</form>
+            </div>
+            
+          <div class="twot">
+		  	<dl class="width bttitle margin_top">
+    		  <dt></dt>
+                <dd class="bttext"><img src="static/images/yuq31.jpg" width="17" height="17" /> <font>舆情</font>“晴雨表”</dd>
+                <dd class="btright"></dd>
+              </dl>
+    		<dl class="gt">
+        	<dt>1.最近一周热点话题内容分类及比例</dt>
+            <dd><div><canvas id="ccc" height="300" width="320"></canvas>
+				<script type="text/javascript">	
+				 var opts = {
+   				"FFCanvasHTC": "/plotkit/ffcanvas.htc",
+   				"colorScheme": PlotKit.Base.palette(PlotKit.Base.baseColors()[2]),
+				
+   				"padding": {left: 0, right: 0, top: 10, bottom: 50},
+   				"xTicks": [{v:0, label:"前五天"}, 
+          			{v:1, label:"前四天"}, 
+          			{v:2, label:"前三天"},
+          			{v:3, label:"前两天"},
+          			{v:4, label:"前一天"},
+				{v:5, label:"今天"}],
+   				 
+						};	
+			
+
+				function drawGraph() {
+    				var layout = new PlotKit.Layout("pie", opts);
+    				layout.addDataset("sqrt", [ [0,3], [1,1], [2,1], [3,3], [4, 3], [5,2] ]);
+    				layout.evaluate();
+    				var canvas = MochiKit.DOM.getElement("ccc");
+    				var plotter = new PlotKit.SweetCanvasRenderer(canvas, layout, opts);
+   				plotter.render();
+							}
+				
+				MochiKit.DOM.addLoadEvent(drawGraph);
+				</script>				
+				</div></dd>
+        	<dt>2.最近一个月校园热点舆情倾向性分布走势图</dt>
+            <dd><div><canvas id="qqq" height="300" width="320"></canvas>
+				<script type="text/javascript">	
+				 var optios = {
+   				"FFCanvasHTC": "/plotkit/ffcanvas.htc",
+   				"colorScheme": PlotKit.Base.palette(PlotKit.Base.baseColors()[5]),
+				
+   				"padding": {left: 0, right: 0, top: 10, bottom: 50},
+   				"xTicks": [{v:0, label:"0-5"}, 
+          			{v:1, label:"6-10"}, 
+          			{v:2, label:"11-15"},
+          			{v:3, label:"16-20"},
+          			{v:4, label:"21-25"},
+				{v:5, label:"26-31"}],
+   				 "barWidthFillFraction": 0.40,
+				 "yAxis": [0, 20],
+						};	
+			
+
+				function drawGraph() {
+    				var layout = new PlotKit.Layout("line", optios);
+    				layout.addDataset("dataset1", [ [0,6], [1,7], [2,9], [3,10], [4, 11], [5,12] ]);
+				layout.addDataset("dataset2", [ [0,5], [1,7], [2,8], [3,9], [4, 10], [5,10] ]);
+    				layout.evaluate();
+    				var canvas = MochiKit.DOM.getElement("qqq");
+    				var plotter = new PlotKit.SweetCanvasRenderer(canvas, layout, optios);
+   				plotter.render();
+							}
+				
+				MochiKit.DOM.addLoadEvent(drawGraph);
+				</script>				
+				</div></dd>
+        </dl>
+        </div>
+        
+        </div>
+    </div>
+    <div class="footer width">版权所有：重庆邮电大学與情小组版权所有</div>
+</div>
+</div>
+<div class="clear"></div>
+	
+
+{%endblock%}
+

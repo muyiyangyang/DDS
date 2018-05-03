@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>重邮與情监控系统|RYC-N4-A8</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"><style type="text/css">
+  body {
+    behavior: url("/a8/struts/htc/csshover3.htc");
+  }
+</style>
+<link href="/a8/struts/jquery/css/jquery.ui.custom.css" rel="stylesheet" type="text/css" />
+<link href="/a8/struts/base/css/base.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="/a8/struts/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/a8/struts/jquery/jquery.bgiframe.min.js"></script>
+<script type="text/javascript" src="/a8/struts/jquery/jquery.ui.custom.min.js"></script>
+<script type="text/javascript" src="/a8/struts/jquery/jquery.metadata.js"></script>
+<script type="text/javascript" src="/a8/struts/jquery/jquery.validate.pack.js"></script>
+<script type="text/javascript" src="/a8/struts/jquery/messages_cn.js"></script>
+<script type="text/javascript">$j = jQuery.noConflict();</script>
+<script type="text/javascript" src="/a8/struts/My97DatePicker/WdatePicker.js" defer="defer"></script>
+<script type="text/javascript" src="/a8/struts/base/js/base.js"></script>
+<script type="text/javascript">jQuery.extend(Bonc.Constants,{WEB_APP_CONTEXT_PATH:Bonc._getContextPath('/struts/base/js/base.js'),WEB_APP_ACTION_EXTENSION:'action',BLANK_IMAGE_URL:Bonc._getContextPath('/struts/base/js/base.js')+'/struts/base/s.gif'});</script><script type="text/javascript" src="/a8/resources/xframe/js/xframe.js"></script>
+<link href="/a8/resources/unicom-bi-zb/css/unicom-bi-zb.css" rel="stylesheet" type="text/css" />
+
+		<style type="text/css">
+			#navMenu input{
+					position:absolute;
+					top:5px;
+					right:40px;
+					width:60px;
+					height:25px;
+					font-size:14px;
+				}
+		</style>
+		<script type="text/javascript">
+			$j(function() {
+				$j('#switchHide').click(function(){//隐藏展开顶部，增加可视区
+					var thisObj=$j(this);
+					if(thisObj.hasClass('up')){
+						$j('#navTool').hide();
+						$j('#sysTool').hide();
+						$j('#welcomInfo').hide();
+						thisObj.removeClass('up up_hover').addClass('down').attr('title','展开');
+					}else{
+						$j('#navTool').show();
+						$j('#sysTool').show();
+						$j('#welcomInfo').show();
+						thisObj.removeClass('down down_hover').addClass('up').attr('title','隐藏');
+						Bonc.setCookie('EFrame_menu','up',0);
+					}
+				});
+				(function(){
+					var menu=Bonc.getCookie('EFrame_menu');
+					if(menu=='down'){
+						$j('#switchHide').click();
+					}
+				})();
+				$j('#switchHide').hover(function(){
+						var thisObj=$j(this);
+						if(thisObj.hasClass('up')){
+							thisObj.addClass('up_hover');
+						}else{
+							thisObj.addClass('down_hover');
+						}
+					},function(){
+						var thisObj=$j(this);
+						if(thisObj.hasClass('up')){
+							thisObj.removeClass('up_hover');
+						}else{
+							thisObj.removeClass('down_hover');
+						}
+					}
+				);
+				
+				iframeMinHeight = function(){
+				   if($j('#switchHide').hasClass('down')){
+					   return $j(window).height() -$j('#navMenu').height()-6;
+				   }else{
+					   return $j(window).height() - $j('#navTool').height() -$j('#navMenu').height()-3;
+					}
+				}
+				$j('#mainIframe').css('height', iframeMinHeight() + 'px');
+				Bonc.Document.setIframeAutoHeight('mainIframe',iframeMinHeight);
+				
+				new Bonc.menu.navMenu({
+					renderTo:'navMenuContent',
+					data:[{"id":"006.001","parentId":"006","text":"安全审计","url":"/xframe/forum/User?__moduleId=006.001"},{"id":"kb_menu_root","parentId":"root","text":"系统菜单","url":"A8?__moduleId=kb_menu_root"},{"id":"662","parentId":"kb_menu_root","text":"首页","url":"http://www.ryc360.com/a8?__moduleId=662"},{"id":"444","parentId":"kb_menu_root","text":"A8","url":null},{"id":"421","parentId":"kb_menu_root","text":"POMAS","url":null},{"id":"006.002","parentId":"006","text":"安全网关","url":"/xframe/forum/Forum?__moduleId=006.002"},{"id":"006","parentId":"kb_menu_root","text":"N4","url":"null"},{"id":"006.003","parentId":"006","text":"安全管理","url":"/xframe/forum/BoardType?__moduleId=006.003"},{"id":"458","parentId":"444","text":"网络分流器","url":null},{"id":"459","parentId":"444","text":"流量经营分析系统","url":null},{"id":"460","parentId":"444","text":"网站监控系统","url":null},{"id":"623","parentId":"006.001","text":"运维安全审计系统","url":null},{"id":"624","parentId":"006.002","text":"流量控制系统","url":null},{"id":"625","parentId":"006.002","text":"负载均衡系统","url":"http://192.168.18.26?__moduleId=625"},{"id":"626","parentId":"006.002","text":"Web应用防火墙","url":null},{"id":"627","parentId":"006.003","text":"攻防演练平台","url":null},{"id":"628","parentId":"006.003","text":"网络运维管理系统","url":null},{"id":"661","parentId":"006.001","text":"无线IPS系统","url":"http://42.121.114.51:8080/newWeb/login.jsp?__moduleId=661"},{"id":"423","parentId":"kb_menu_root","text":"RYC","url":null},{"id":"629","parentId":"421","text":"知云舆情网","url":"http://221.226.25.3?__moduleId=629"},{"id":"630","parentId":"421","text":"舆情日报服务","url":null},{"id":"489","parentId":"423","text":"RYC网盘","url":null},{"id":"495","parentId":"423","text":"百度贴吧","url":null},{"id":"457","parentId":"444","text":"互联网信息推送系统","url":null},{"id":"456","parentId":"444","text":"IDC/ISP信息安全管理系统","url":null},{"id":"631","parentId":"421","text":"舆情月报服务","url":null},{"id":"453","parentId":"421","text":"舆情监测分析系统","url":"http://60.8.150.138:8001/xaom/thnwin/l/login.om?__moduleId=453"},{"id":"486","parentId":"423","text":"新浪微博","url":null},{"id":"622","parentId":"006.001","text":"主机审计系统","url":null},{"id":"496","parentId":"423","text":"腾讯微博","url":null},{"id":"487","parentId":"423","text":"软云神州官网","url":"http://www.ryc360.com?__moduleId=487"},{"id":"621","parentId":"006.001","text":"网络审计系统","url":null}],
+					rootId:'kb_menu_root',
+					parentNodeId:'parentId',
+					nodeId:'id',
+					click:function(node){ 
+						var url = $j(node).attr('murl');
+			            if (url && url != 'null' && url != '#') {
+			                url = Bonc.toFullPath(url);
+			                $j('#mainIframe').attr('src', url);
+			            }
+			        },
+			        listener:{
+			        	afterrender:function(menu){
+			        		menu.find('a[murl][murl!="null"][murl!=""]:first').click();
+			        	}
+			        }
+		        });
+		        Bonc.scrollMenu('navMenuContent','navMenuScrollLeft','navMenuScrollRight');
+				
+				$j('#logout').click(function(e){
+					Bonc.showDialog({
+			            resizable: false,
+			            title:'退出',
+			            height: 180,
+			            modal: true,
+			            draggable: false,
+			            content:'<p style="margin:20px 0 20px 20px;">您确定要退出系统吗？<p>',
+			            buttons: {
+				            '取消': function(){
+		            			$j(this).dialog('close');
+				            },
+				            '确定': function(){
+				            	Bonc.removeCookie('JSESSIONID');
+					 			top.location.href=Bonc.toFullPath('/xframe/security/Logout.action');
+					 			$j(this).dialog('close');
+				            }
+	             		}
+			        });
+				});
+				$j('#modifyPass').click(function(){
+					 Bonc.widget.toolbar({
+						id:'tool-password',
+						resizable: false,
+						height:420,
+						width:610,
+			            title:'<span class="tool-modifyPassTitle">&nbsp;</span>',
+			            url:Bonc.toFullPath('/xframe/security/ModifyPW.action')
+			        });
+				});
+				$j('#post').click(function(){
+					 Bonc.widget.toolbar({
+						id:'tool-post',
+						resizable: true,
+						height:450,
+						width:610,
+			            title:'<span class="tool-postTitle">&nbsp;</span>'+
+			            '<span class="dialog-title-addition" onclick="javascript:showMorePost()">[历史公告]</span>',
+			            url:Bonc.toFullPath('/xframe/security/Post!alert.action')
+			        });
+				});
+				$j('#pageDesc').click(function(){
+					var i=document.getElementById("mainIframe").contentWindow;
+					if(i.Bonc){
+						var pageId=i.Bonc.DSS_PAGE_ID;
+						if(pageId){
+							 Bonc.widget.toolbar({
+								id:'tool-pageDesc',
+								resizable: true,
+								height:450,
+								width:610,
+					            title:'<span class="tool-pageDescTitle">&nbsp;</span>',
+					            url:Bonc.toFullPath('/xframe/page/PageDesc.action?pageId='+pageId)
+					        });
+						    return;
+						}
+					}
+					alert('当前页面没有指标');
+				});
+				
+				//个人消息
+				$j('#message').click(function(){
+					var url = Bonc.toFullPath('/xframe/service/Message.action');
+					//$j("#mainIframe").attr('src', url);
+					window.open(url,'个人消息','width=400,height=100,menubar=no,toolbar=no,location=no,directories=no,status=no, scrollbars=yes,resizable=yes');
+				});
+				
+				var msgUrl = Bonc.toFullPath('/xframe/service/Message!alert.action');
+				$j.ajax({
+					url: msgUrl,
+					success: function(msg){
+						var text = msg[0].msgNum + '条';
+						$j('#messageNum').html(text);
+					}
+				});
+			});
+			showMorePost=function(){
+				$j('#mainIframe').attr('src',Bonc.toFullPath('/xframe/security/Post'));
+				setTimeout(function(){Bonc.widget.toolbarClose('tool-post')},1000);
+			};
+			//检测在线用户统计信息
+			Bonc.showOnlineUser({
+				showPostion:'status',
+				template:'当前用户:532【A8-001】在线用户数：$totalOnline$',
+				intervalTime:(180||180)*1000
+			});
+		</script>
+	</head>
+	<body id="frameBody">
+		<div id="frameViewBody">
+			
+			
+			<div id="navMenu" class="navMenu">
+				<div id="navMenuContent" class="content" style="float: left;"></div>
+				<div id="navMenuScroll" class="scroll">d
+					<span class="left" title="向左" id="navMenuScrollLeft"></span>
+					<span class="right" title="向右" id="navMenuScrollRight"></span>
+				</div>
+				<input type="button" value="退出" id="logout"/>
+				<br class="clearfloat" />
+			</div>
+	
+				
+					
+				
+			
+			
+			<iframe id="mainIframe" name="mainIFrame" scrolling="yes" onload="this.height=mainIFrame.document.body.scrollHeight" 
+				frameborder="no" height="100%" width="100%"></iframe>
+		</div>
+	</body>
+</html>
+
